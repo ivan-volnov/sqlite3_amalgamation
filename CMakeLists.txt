@@ -1,0 +1,33 @@
+cmake_minimum_required(VERSION 3.24)
+
+project(sqlite3_amalgamation LANGUAGES C)
+
+add_definitions(
+    # default params
+    -DSQLITE_DQS=0
+    -DSQLITE_THREADSAFE=0
+    -DSQLITE_DEFAULT_MEMSTATUS=0
+    -DSQLITE_DEFAULT_WAL_SYNCHRONOUS=1
+    -DSQLITE_LIKE_DOESNT_MATCH_BLOBS
+    -DSQLITE_MAX_EXPR_DEPTH=0
+    -DSQLITE_OMIT_DECLTYPE
+    -DSQLITE_OMIT_DEPRECATED
+    -DSQLITE_OMIT_PROGRESS_CALLBACK
+    -DSQLITE_OMIT_SHARED_CACHE
+    -DSQLITE_USE_ALLOCA
+    -DSQLITE_OMIT_AUTOINIT
+
+    # custom settings
+    -DSQLITE_DEFAULT_FOREIGN_KEYS=1
+    -DSQLITE_OMIT_LOAD_EXTENSION
+    -DSQLITE_OMIT_UTF16
+)
+
+add_library(${PROJECT_NAME} STATIC
+    extension-functions.c
+    sqlite3.c
+)
+
+target_include_directories(${PROJECT_NAME}
+    PUBLIC include
+)
